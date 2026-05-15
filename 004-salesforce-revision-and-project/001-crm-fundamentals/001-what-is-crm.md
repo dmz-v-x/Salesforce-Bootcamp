@@ -211,6 +211,14 @@ CRM is not used by only one team.
 
 Many departments use it together.
 
+Main departments include:
+
+- Sales team
+- Customer support team
+- Marketing team
+- Finance team
+- Management team
+
 ---
 
 ### 7. Sales Team Usage
@@ -376,19 +384,19 @@ So:
 
 Some famous CRM platforms are:
 
-- :contentReference[oaicite:0]{index=0}
-- :contentReference[oaicite:1]{index=1}
-- :contentReference[oaicite:2]{index=2}
-- :contentReference[oaicite:3]{index=3}
-- :contentReference[oaicite:4]{index=4}
+- Salesforce
+- HubSpot CRM
+- Zoho CRM
+- Microsoft Dynamics 365
+- SAP CRM
 
-Among them, :contentReference[oaicite:5]{index=5} is one of the most popular CRM platforms in the world.
+Among them, Salesforce is one of the most popular CRM platforms in the world.
 
 ---
 
 ### 16. Real World Example — Amazon
 
-When you use :contentReference[oaicite:6]{index=6}:
+When you use Amazon:
 
 Amazon remembers:
 - Your orders
@@ -520,8 +528,10 @@ That mindset itself is CRM.
 #### Software System
 
 Tools like:
-- :contentReference[oaicite:7]{index=7}
-- :contentReference[oaicite:8]{index=8}
+- Salesforce
+- Zoho CRM
+- HubSpot CRM
+- Microsoft Dynamics 365
 
 help implement that strategy digitally.
 
@@ -598,7 +608,77 @@ This entire customer journey is managed through CRM.
 
 ---
 
-### 23. Final Understanding
+### 23. Additional Features Modern CRM Systems Provide
+
+Modern CRM systems include advanced features such as:
+
+- AI-based customer insights
+- Chatbot integration
+- Mobile access
+- Workflow automation
+- Social media integration
+- Real-time analytics dashboards
+- Cloud storage
+- Customer segmentation
+
+These features help businesses operate more efficiently.
+
+---
+
+### 24. Cloud CRM vs On-Premise CRM
+
+CRM systems are commonly deployed in two ways.
+
+#### Cloud CRM
+
+Software runs on the internet.
+
+Examples:
+- Salesforce
+- HubSpot CRM
+
+Advantages:
+- Accessible from anywhere
+- Lower setup cost
+- Automatic updates
+
+---
+
+#### On-Premise CRM
+
+Software is installed on company servers.
+
+Advantages:
+- More control over data
+- Better for strict security requirements
+
+Disadvantages:
+- Higher maintenance cost
+- Requires IT infrastructure
+
+---
+
+### 25. Industries That Use CRM
+
+CRM is used in almost every industry.
+
+Examples:
+
+- Banking
+- Healthcare
+- E-commerce
+- Education
+- Real estate
+- Insurance
+- Telecommunications
+- Hospitality
+- Retail
+
+Any business dealing with customers can benefit from CRM.
+
+---
+
+### 26. Final Understanding
 
 CRM is a system that helps businesses:
 
