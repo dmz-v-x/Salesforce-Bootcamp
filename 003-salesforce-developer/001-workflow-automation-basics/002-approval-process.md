@@ -1,881 +1,885 @@
-## Workflow Rules in Salesforce
+## Approval Process in Salesforce — Complete Beginner Explanation (From Scratch)
 
-### 1. Why Do We Need Automation?
+### 1. Why Do We Need an Approval Process?
 
-Before understanding Workflow Rules, we first need to understand the problem they solve.
+Before understanding Approval Processes, let's first understand the business problem they solve.
 
-Imagine a company where sales representatives create customer records every day.
+Imagine an employee wants to take leave for 10 days.
 
-Whenever a new customer record is created, certain actions must happen:
+Should the employee be allowed to approve their own leave request?
 
-- An email should be sent to the manager.
-- A follow-up task should be created.
-- Some fields should be updated automatically.
-- Another team should be notified.
+Obviously not.
 
-If employees perform these actions manually every time:
+The request should first be reviewed by a manager.
 
-- Work becomes slow.
-- Human errors increase.
-- Employees may forget important tasks.
-- Business processes become inconsistent.
+Similarly, in a company:
 
-To solve this problem, Salesforce provides automation tools.
+- A discount above 20% may require manager approval.
+- A large expense claim may require finance approval.
+- A contract may require legal approval.
+- A purchase request may require director approval.
+- A loan application may require multiple levels of approval.
 
-Automation means:
+Without a structured approval mechanism:
 
-> Let Salesforce perform repetitive business tasks automatically without requiring a user to perform them manually.
+- Employees might bypass rules.
+- Unauthorized decisions could be made.
+- Auditing becomes difficult.
+- Business policies become inconsistent.
 
-Example:
-
-Whenever an Opportunity becomes Closed Won, automatically notify the Finance Team.
-
-Instead of a sales representative sending an email manually, Salesforce can do it automatically.
-
-This concept is called:
-
-**Business Process Automation**
+To solve this problem, Salesforce provides the **Approval Process** feature.
 
 ---
 
-### 2. What Is a Workflow Rule?
-
-A Workflow Rule is one of Salesforce's automation features.
+### 2. What Is an Approval Process?
 
 #### Definition
 
-A Workflow Rule is a declarative automation tool that automatically performs predefined actions when specified conditions are met.
+An Approval Process is a Salesforce automation feature that allows records to be submitted for approval and routed through one or more approvers before a final decision is made.
 
 In simple words:
 
-> IF something happens, THEN Salesforce automatically performs an action.
+> An Approval Process is a mechanism that allows records to be reviewed and approved or rejected by authorized users.
 
 Think of it as:
 
 ```text
-IF Condition is True
-THEN Perform Action
+Record Created
+       ↓
+Submitted For Approval
+       ↓
+Approver Reviews
+       ↓
+Approve or Reject
+       ↓
+Final Outcome
 ```
 
 ---
 
-### 3. Real-Life Example of a Workflow Rule
+### 3. Real-Life Example
 
-Suppose your company has a process:
+Suppose a sales representative creates an Opportunity.
 
-Whenever a Lead becomes qualified, the Sales Manager must be notified.
-
-Without automation:
-
-1. Sales Representative updates Lead.
-2. Sales Representative manually sends email.
-3. Manager receives email.
-
-With Workflow Rule:
+Company policy states:
 
 ```text
-Condition:
-Lead Status = Qualified
-
-Action:
-Send Email Alert
+Discount > 25%
 ```
 
-Process becomes:
+must be approved by the Sales Manager.
+
+Without Approval Process:
 
 ```text
-Lead Updated
-      ↓
-Condition Evaluated
-      ↓
-Condition True
-      ↓
-Email Sent Automatically
+Sales Rep
+    ↓
+Manually emails manager
+    ↓
+Manager replies
+    ↓
+Sales Rep updates record
 ```
 
-No manual effort is required.
+Messy and difficult to track.
+
+With Approval Process:
+
+```text
+Opportunity Created
+        ↓
+Submitted For Approval
+        ↓
+Sales Manager Receives Request
+        ↓
+Approve or Reject
+        ↓
+Salesforce Updates Record
+```
+
+Everything is tracked automatically.
 
 ---
 
-### 4. Components of a Workflow Rule
+### 4. What Can Be Submitted for Approval?
 
-Every Workflow Rule consists of two major parts:
-
-#### Part A: Criteria (Condition)
-
-Criteria tells Salesforce:
-
-> When should this workflow execute?
+Any object can participate in an Approval Process.
 
 Examples:
 
-```text
-Opportunity Amount > 100000
-```
+#### Standard Objects
 
-```text
-Lead Status = Qualified
-```
-
-```text
-Case Priority = High
-```
-
-Salesforce continuously checks whether these conditions are satisfied.
-
----
-
-#### Part B: Actions
-
-Actions tell Salesforce:
-
-> What should happen after the condition becomes true?
-
-Examples:
-
-```text
-Send Email
-```
-
-```text
-Update Field
-```
-
-```text
-Create Task
-```
-
-```text
-Send Data to External System
-```
-
-So the complete workflow looks like:
-
-```text
-IF Condition
-THEN Execute Action
-```
-
----
-
-### 5. On Which Objects Can Workflow Rules Be Created?
-
-Workflow Rules can be created on both standard and custom objects.
-
-Examples of standard objects:
-
-- Account
-- Contact
-- Lead
 - Opportunity
 - Case
-- Campaign
+- Lead
+- Contract
+- Quote
 
-Examples of custom objects:
+#### Custom Objects
 
-- Student
-- Employee
-- Project
 - Leave Request
-- Invoice
-
-Any object that supports business automation can use Workflow Rules.
-
----
-
-### 6. Example Using a Lead Object
-
-Suppose your company receives leads from its website.
-
-Business requirement:
-
-Whenever a lead comes from the website, notify the sales team.
-
-Workflow configuration:
-
-```text
-Object:
-Lead
-```
-
-```text
-Condition:
-Lead Source = Website
-```
-
-```text
-Action:
-Send Email Alert
-```
-
-Process:
-
-```text
-Website Lead Created
-          ↓
-Workflow Evaluates Condition
-          ↓
-Condition True
-          ↓
-Email Sent To Sales Team
-```
-
----
-
-### 7. Workflow Rule Evaluation Criteria
-
-Salesforce needs to know:
-
-> When should the workflow check the condition?
-
-For this purpose Salesforce provides Evaluation Criteria.
-
-There are three evaluation options.
-
----
-
-### 8. Evaluation Option 1 — Created
-
-The workflow executes only when the record is created.
+- Purchase Request
+- Expense Claim
+- Loan Application
+- Vendor Approval
 
 Example:
 
 ```text
-Lead Created
+Leave Request Object
 ```
 
-Salesforce checks the condition once.
+Employee submits leave request.
 
-After that, it never evaluates the workflow again for that record.
-
-#### Example
-
-Condition:
-
-```text
-Lead Source = Website
-```
-
-Lead Creation:
-
-```text
-Lead Source = Website
-```
-
-Result:
-
-```text
-Condition True
-↓
-Workflow Executes
-```
-
-Later if the lead is edited:
-
-```text
-Lead Status Changed
-```
-
-Workflow will NOT execute again.
-
-Because evaluation was configured as:
-
-```text
-Created
-```
+Manager approves or rejects it.
 
 ---
 
-### 9. Evaluation Option 2 — Created and Every Time It's Edited
+### 5. Key Terminologies in Approval Process
 
-The workflow executes:
-
-- When record is created
-- Every time record is updated
-
-#### Example
-
-Workflow Condition:
-
-```text
-Status = Qualified
-```
-
-Initial Record:
-
-```text
-Status = New
-```
-
-Result:
-
-```text
-Condition False
-```
-
-No action occurs.
-
-Later user updates:
-
-```text
-Status = Qualified
-```
-
-Result:
-
-```text
-Condition True
-↓
-Workflow Executes
-```
-
-Later user updates another field:
-
-```text
-Phone Number Changed
-```
-
-Condition is still:
-
-```text
-Status = Qualified
-```
-
-Result:
-
-```text
-Condition True
-↓
-Workflow Executes Again
-```
-
-This option can sometimes create duplicate actions because the workflow executes every time the record is edited while the condition remains true.
+Before learning the configuration steps, we must understand some important terms.
 
 ---
 
-### 10. Evaluation Option 3 — Created and Edited to Subsequently Meet Criteria
+### 6. Submitter
 
-This is the most commonly used evaluation option.
-
-The workflow executes only when the condition changes from:
-
-```text
-False → True
-```
-
-#### Example
-
-Workflow Condition:
-
-```text
-Status = Qualified
-```
-
-Initially:
-
-```text
-Status = New
-```
-
-Condition Result:
-
-```text
-False
-```
-
-No action occurs.
-
-User updates record:
-
-```text
-Status = Qualified
-```
-
-Condition Result:
-
-```text
-True
-```
-
-Transition:
-
-```text
-False → True
-```
-
-Workflow executes.
-
-Later user edits another field:
-
-```text
-Email Updated
-```
-
-Condition Result:
-
-```text
-True
-```
-
-Transition:
-
-```text
-True → True
-```
-
-Workflow does NOT execute again.
-
-This prevents duplicate emails, duplicate tasks, and duplicate updates.
-
----
-
-### 11. Types of Workflow Actions
-
-Workflow Rules can perform four major actions.
-
-#### 1. Email Alert
-
-Automatically sends emails.
+The Submitter is the user who submits the record for approval.
 
 Example:
 
 ```text
-Opportunity Stage = Closed Won
+Employee submits leave request
 ```
 
-Action:
+Employee is the:
 
 ```text
-Send Email To Finance Team
-```
-
-Process:
-
-```text
-Opportunity Closed Won
-           ↓
-Workflow Rule
-           ↓
-Email Alert
-           ↓
-Finance Team Receives Email
+Submitter
 ```
 
 ---
 
-#### 2. Field Update
+### 7. Approver
 
-Automatically updates field values.
+The Approver is the person responsible for reviewing the request.
 
 Example:
 
-Condition:
-
 ```text
-Case Priority = High
+Manager reviews leave request
 ```
 
-Action:
+Manager is the:
 
 ```text
-Escalation Status = Yes
+Approver
 ```
 
-Before:
+Approver can:
 
-```text
-Priority = High
-Escalation Status = No
-```
+- Approve
+- Reject
+- Reassign
 
-After Workflow:
-
-```text
-Priority = High
-Escalation Status = Yes
-```
-
-No user interaction is required.
+the request.
 
 ---
 
-#### 3. Task Creation
+### 8. Approval Request
 
-Automatically creates tasks.
+When a record enters the approval process, Salesforce creates an approval request.
 
 Example:
 
-Condition:
-
 ```text
-Lead Status = Qualified
+Leave Request Submitted
 ```
 
-Action:
+Salesforce sends request to manager:
 
 ```text
-Create Follow-up Call Task
+Please review Leave Request #123
 ```
 
-Result:
+This request appears in:
 
-Sales Representative automatically receives a task:
-
-```text
-Call Customer
-Due Tomorrow
-```
-
-No manual task creation is required.
+- Approver's email
+- Salesforce notifications
+- Approval work items
 
 ---
 
-#### 4. Outbound Message
+### 9. Approval Steps
 
-Used for integrations.
-
-Salesforce automatically sends information to an external application.
+An Approval Process can contain one or more approval levels.
 
 Example:
 
 ```text
-Order Approved
-```
-
-Action:
-
-```text
-Send Order Information To ERP System
-```
-
-Process:
-
-```text
-Salesforce
-     ↓
-Workflow Rule
-     ↓
-Outbound Message
-     ↓
-External System
-```
-
-This communication happens automatically.
-
----
-
-### 12. Immediate Actions
-
-Immediate actions execute as soon as the workflow condition becomes true.
-
-Example:
-
-Condition:
-
-```text
-Case Priority = High
-```
-
-Action:
-
-```text
-Send Email Alert
-```
-
-Timeline:
-
-```text
-Condition Met
+Employee
       ↓
-Action Executes Immediately
+Manager Approval
+      ↓
+Director Approval
+      ↓
+Finance Approval
 ```
 
-No waiting period exists.
+Each level is called an:
+
+```text
+Approval Step
+```
 
 ---
 
-### 13. Time-Dependent Actions
+### 10. Approval Process Structure
 
-Sometimes actions should occur after a specific time period.
+Every Approval Process contains:
 
-Workflow Rules support time-based actions.
+1. Entry Criteria
+2. Initial Submission Actions
+3. Approval Steps
+4. Approval Actions
+5. Rejection Actions
+6. Final Approval Actions
+7. Final Rejection Actions
+
+We will study each one individually.
+
+---
+
+### 11. Entry Criteria
+
+Entry Criteria determines:
+
+> Which records are allowed to enter the approval process?
 
 Example:
 
-Business Requirement:
-
-If a lead is not contacted within three days, create a reminder task.
-
-Workflow Configuration:
-
 ```text
-Lead Created
+Discount Percentage > 25%
 ```
 
-Action:
+Only opportunities meeting this condition can be submitted.
+
+Examples:
 
 ```text
-After 3 Days
+Amount > 100000
+```
+
+```text
+Leave Days > 5
+```
+
+```text
+Expense Amount > 50000
+```
+
+If criteria is not satisfied:
+
+```text
+Approval Process Not Started
+```
+
+---
+
+### 12. Initial Submission Actions
+
+These actions execute immediately after a record is submitted for approval.
+
+Example:
+
+Employee submits leave request.
+
+Salesforce automatically:
+
+```text
+Update Status = Pending Approval
+```
+
+or
+
+```text
+Send Email To Manager
+```
+
+or
+
+```text
+Lock Record
+```
+
+These are called:
+
+```text
+Initial Submission Actions
+```
+
+---
+
+### 13. Why Does Salesforce Lock the Record?
+
+After submission:
+
+The record is usually locked.
+
+Purpose:
+
+Prevent unauthorized changes while approval is in progress.
+
+Example:
+
+```text
+Expense Claim Submitted
+```
+
+If employee modifies amount after submission:
+
+Approval becomes meaningless.
+
+Therefore Salesforce locks the record.
+
+Example:
+
+```text
+Submitted
+     ↓
+Record Locked
+     ↓
+Waiting For Approval
+```
+
+---
+
+### 14. Approval Steps
+
+Approval Steps define:
+
+> Who should approve the record?
+
+Example:
+
+```text
+Step 1
+Manager Approval
+```
+
+or
+
+```text
+Step 1
+Team Lead Approval
+
+Step 2
+Manager Approval
+
+Step 3
+Director Approval
+```
+
+Each step must be completed before proceeding to the next step.
+
+---
+
+### 15. How Salesforce Determines the Approver
+
+Approvers can be determined in multiple ways.
+
+#### Option 1: Specific User
+
+Example:
+
+```text
+Sales Manager
+```
+
+Always receives the approval request.
+
+---
+
+#### Option 2: Record Owner's Manager
+
+Example:
+
+```text
+Employee submits request
+```
+
+Salesforce automatically finds:
+
+```text
+Employee's Manager
+```
+
+and sends approval request.
+
+---
+
+#### Option 3: Role-Based Approver
+
+Example:
+
+```text
+Finance Manager Role
+```
+
+Whoever belongs to that role receives the request.
+
+---
+
+#### Option 4: Queue
+
+Approval request can be assigned to a queue.
+
+Any queue member can process it.
+
+---
+
+### 16. Approval Actions
+
+When an approver clicks Approve, Salesforce executes approval actions.
+
+Example:
+
+Manager approves leave request.
+
+Salesforce automatically:
+
+```text
+Status = Approved
+```
+
+or
+
+```text
+Send Confirmation Email
+```
+
+or
+
+```text
 Create Follow-Up Task
 ```
 
-Timeline:
+These actions are called:
 
 ```text
-Day 1
-Lead Created
-
-      ↓
-
-Day 3
-Task Created Automatically
+Approval Actions
 ```
-
-This is called a:
-
-**Time-Dependent Workflow Action**
 
 ---
 
-### 14. Complete Real Business Example
+### 17. Rejection Actions
 
-Let us build a complete workflow.
+If the approver rejects the request:
+
+Salesforce executes rejection actions.
+
+Example:
+
+```text
+Status = Rejected
+```
+
+or
+
+```text
+Send Rejection Email
+```
+
+or
+
+```text
+Notify Employee
+```
+
+These actions are called:
+
+```text
+Rejection Actions
+```
+
+---
+
+### 18. Final Approval Actions
+
+When all approval steps are completed successfully:
+
+Salesforce executes Final Approval Actions.
+
+Example:
+
+```text
+Status = Approved
+```
+
+```text
+Unlock Record
+```
+
+```text
+Send Approval Notification
+```
+
+```text
+Create Contract
+```
+
+Example Flow:
+
+```text
+Step 1 Approved
+       ↓
+Step 2 Approved
+       ↓
+Final Approval Reached
+       ↓
+Final Approval Actions Execute
+```
+
+---
+
+### 19. Final Rejection Actions
+
+If approval process ultimately ends in rejection:
+
+Salesforce executes Final Rejection Actions.
+
+Example:
+
+```text
+Status = Rejected
+```
+
+```text
+Unlock Record
+```
+
+```text
+Notify Requestor
+```
+
+```text
+Send Email Notification
+```
+
+---
+
+### 20. Example: Leave Request Approval Process
+
+Let's build a complete example.
 
 #### Business Requirement
 
-Whenever a Lead becomes Qualified:
-
-1. Notify Sales Manager.
-2. Create Follow-Up Task.
-3. Update Review Status.
+Any leave request longer than 5 days requires manager approval.
 
 ---
 
-#### Step 1: Select Object
+#### Step 1: Employee Creates Leave Request
 
 ```text
-Lead
+Leave Days = 10
 ```
 
----
-
-#### Step 2: Define Criteria
+Status:
 
 ```text
-Status = Qualified
+Draft
 ```
 
 ---
 
-#### Step 3: Select Evaluation Criteria
+#### Step 2: Submit for Approval
+
+Employee clicks:
 
 ```text
-Created and Edited to Subsequently Meet Criteria
+Submit For Approval
 ```
 
 ---
 
-#### Step 4: Configure Actions
+#### Step 3: Entry Criteria Check
 
-##### Action 1
-
-Email Alert:
+Criteria:
 
 ```text
-Notify Sales Manager
+Leave Days > 5
 ```
 
-##### Action 2
-
-Task Creation:
+Result:
 
 ```text
-Follow-Up Call
+10 > 5
 ```
 
-##### Action 3
+Condition is true.
 
-Field Update:
+Approval process starts.
+
+---
+
+#### Step 4: Initial Submission Actions
+
+Salesforce:
 
 ```text
-Review Status = Pending
+Status = Pending Approval
+```
+
+```text
+Lock Record
+```
+
+```text
+Send Email To Manager
 ```
 
 ---
 
-#### Complete Process Flow
+#### Step 5: Manager Reviews Request
+
+Manager receives notification.
+
+Options:
 
 ```text
-Sales Representative Updates Lead
-                 ↓
-Status = Qualified
-                 ↓
-Workflow Evaluates Condition
-                 ↓
-Condition True
-                 ↓
-Email Sent To Manager
-                 ↓
-Task Created
-                 ↓
-Review Status Updated
+Approve
 ```
 
-Everything happens automatically.
+or
+
+```text
+Reject
+```
 
 ---
 
-### 15. Workflow Rules in Salesforce Order of Execution
+#### Step 6A: If Approved
 
-Whenever a record is saved, Salesforce executes several internal processes.
-
-A simplified version is:
+Salesforce executes:
 
 ```text
-Record Saved
+Status = Approved
+```
+
+```text
+Unlock Record
+```
+
+```text
+Send Confirmation Email
+```
+
+---
+
+#### Step 6B: If Rejected
+
+Salesforce executes:
+
+```text
+Status = Rejected
+```
+
+```text
+Unlock Record
+```
+
+```text
+Notify Employee
+```
+
+---
+
+### 21. Multi-Level Approval Example
+
+Consider a purchase request.
+
+Company policy:
+
+```text
+Amount > ₹1,00,000
+```
+
+requires multiple approvals.
+
+Process:
+
+```text
+Employee
       ↓
-Validation Rules
+Manager Approval
       ↓
-Workflow Rules
+Finance Approval
       ↓
-Workflow Actions
+Director Approval
       ↓
-Additional Processing
+Approved
 ```
 
-Important point:
+If any approver rejects:
 
-Workflow Rules execute only after the record successfully passes validation.
+```text
+Approval Process Ends
+```
 
-If validation fails, workflow rules never run.
-
----
-
-### 16. Limitations of Workflow Rules
-
-Workflow Rules are considered an older Salesforce automation technology.
-
-They support only limited actions.
-
-Supported actions:
-
-- Email Alert
-- Field Update
-- Task Creation
-- Outbound Message
-
-Not supported:
-
-- Creating records
-- Deleting records
-- Complex decision making
-- Loops
-- Advanced branching
-- Multi-step business processes
-- Rich integrations
-- Reusable automation logic
-
-Because of these limitations Salesforce introduced more advanced automation tools.
+and record becomes rejected.
 
 ---
 
-### 17. Workflow Rules vs Process Builder vs Flow
+### 22. Approval Process Order of Execution
 
-#### Workflow Rules
+Simplified flow:
 
-Characteristics:
-
-- Old automation technology
-- Simple automation
-- Limited actions
-- Easy to configure
-
-Best for:
-
-- Basic business requirements
+```text
+Record Created
+      ↓
+Submit For Approval
+      ↓
+Entry Criteria Checked
+      ↓
+Initial Submission Actions
+      ↓
+Record Locked
+      ↓
+Approval Steps
+      ↓
+Approve or Reject
+      ↓
+Final Approval/Rejection Actions
+      ↓
+Record Unlocked
+```
 
 ---
 
-#### Process Builder
+### 23. Approval Process vs Workflow Rule
 
-Characteristics:
+#### Workflow Rule
 
-- More powerful than Workflow Rules
-- Supports additional actions
-- Can create records
-- Supports multiple criteria
+Purpose:
 
-Current Status:
+```text
+Automatic Action
+```
 
-Process Builder is being phased out by Salesforce.
+Example:
+
+```text
+If Amount > 100000
+Send Email
+```
+
+No human decision required.
+
+---
+
+#### Approval Process
+
+Purpose:
+
+```text
+Human Approval Required
+```
+
+Example:
+
+```text
+If Discount > 25%
+Manager Must Approve
+```
+
+Human intervention is required.
+
+---
+
+### 24. Approval Process vs Flow
+
+#### Approval Process
+
+Designed specifically for:
+
+- Approvals
+- Rejections
+- Record locking
+- Approval routing
 
 ---
 
 #### Flow
 
-Characteristics:
+Designed for:
 
-- Most powerful automation platform
-- Supports complex business logic
-- Can create, update, and delete records
-- Supports loops and decisions
-- Supports integrations
-- Supports user screens
-- Supports reusable automation
-
-Current Salesforce Recommendation:
-
-> Use Flow for all new automation development.
-
----
-
-### 18. Why Is Salesforce Moving Away from Workflow Rules?
-
-Workflow Rules work well for simple requirements.
-
-However modern businesses require:
-
-- Complex approvals
-- Multiple decision paths
+- General automation
+- Complex logic
 - Integrations
-- Dynamic processing
-- Advanced automation
+- Record creation
+- User interaction
+- Advanced business processes
 
-Workflow Rules cannot handle these efficiently.
+Modern Salesforce projects often use:
 
-Therefore Salesforce's strategic automation platform is:
+```text
+Flow + Approval Process
+```
 
-**Salesforce Flow**
-
-New projects should generally use Flow instead of Workflow Rules.
-
----
-
-### 19. Interview Definition
-
-A Workflow Rule is a declarative Salesforce automation feature that automatically triggers actions such as Email Alerts, Field Updates, Task Creation, and Outbound Messages when specified criteria are met. It follows an IF-THEN logic model and is considered a legacy automation tool, with Salesforce Flow being the recommended automation solution for modern implementations.
+together.
 
 ---
 
-### 20. Summary
+### 25. Interview Definition
 
-A Workflow Rule consists of four major parts:
+An Approval Process is a Salesforce automation feature that routes records through one or more approvers for review and decision-making. It allows authorized users to approve or reject records, supports record locking, multiple approval levels, automated notifications, and execution of actions based on approval or rejection outcomes.
 
-1. Object
-2. Criteria
-3. Evaluation Criteria
-4. Actions
+---
 
-Workflow can perform four actions:
+### 26. Summary
 
-- Email Alert
-- Field Update
-- Task Creation
-- Outbound Message
+Approval Process is used when:
 
-Workflow actions can be:
+- Human approval is required.
+- Business policies require authorization.
+- Multiple approval levels exist.
+- Auditability and tracking are important.
 
-- Immediate
-- Time-Based
+Main Components:
 
-Workflow Rules are an older automation technology and are gradually being replaced by Salesforce Flow for new implementations because Flow provides significantly more power and flexibility.
+1. Submitter
+2. Approver
+3. Entry Criteria
+4. Initial Submission Actions
+5. Approval Steps
+6. Approval Actions
+7. Rejection Actions
+8. Final Approval Actions
+9. Final Rejection Actions
+
+Typical Flow:
+
+```text
+Record Created
+      ↓
+Submit For Approval
+      ↓
+Record Locked
+      ↓
+Approver Reviews
+      ↓
+Approve or Reject
+      ↓
+Final Actions Execute
+      ↓
+Record Unlocked
+```
+
+Common Use Cases:
+
+- Leave Approval
+- Expense Approval
+- Discount Approval
+- Purchase Approval
+- Contract Approval
+- Loan Approval
+- Vendor Approval
