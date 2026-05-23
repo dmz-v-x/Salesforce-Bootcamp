@@ -166,13 +166,6 @@ No need to build data centers.
 
 Cloud providers own massive data centers.
 
-Examples:
-
-- :contentReference[oaicite:0]{index=0} (AWS)
-- :contentReference[oaicite:1]{index=1}
-- :contentReference[oaicite:2]{index=2}
-- :contentReference[oaicite:3]{index=3}
-
 They provide computing resources over the internet.
 
 ---
@@ -412,9 +405,9 @@ Developers only focus on application development.
 
 Examples:
 
-- :contentReference[oaicite:4]{index=4} Platform
-- :contentReference[oaicite:5]{index=5}
-- :contentReference[oaicite:6]{index=6}
+- AWS Elastic Beanstalk
+- Salesforce Heroku
+- Google App Engine
 
 Developer builds applications without managing servers.
 
@@ -486,10 +479,10 @@ Everything is handled by the provider.
 
 Examples:
 
-- :contentReference[oaicite:7]{index=7}
-- :contentReference[oaicite:8]{index=8}
-- :contentReference[oaicite:9]{index=9}
-- :contentReference[oaicite:10]{index=10}
+- Google Workspace (Gmail, Docs, Sheets)
+- Salesforce CRM
+- File Storage & Sharing (Dropbox)
+- E-commerce (Shopify)
 
 Users simply log in and use the application.
 
